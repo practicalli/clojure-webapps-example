@@ -1,5 +1,6 @@
 (ns webdev.core
-  (:require [ring.adapter.jetty :as jetty]))
+  (:require [ring.adapter.jetty :as jetty]
+            [ring.middleware.reload :refer [wrap-reload]]))
 
 (defn greet
   "A function to process all requests for the web server.  If a request is for something other than / then an error message is returned"
@@ -16,5 +17,11 @@
   "A very simple web server using Ring & Jetty"
   [port-number]
   (jetty/run-jetty greet
+     {:port (Integer. port-number)}))
+
+(defn -dev-main
+  "A very simple web server using Ring & Jetty that reloads code changes via the development profile of Leiningen"
+  [port-number]
+  (jetty/run-jetty (wrap-reload #'greet)
      {:port (Integer. port-number)}))
 
