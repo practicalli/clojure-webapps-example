@@ -26,11 +26,20 @@
    :body "I am an awesome Clojure developer, well getting there..."
    :headers {}})
 
+(defn yo
+  "A silly function showing the use of variable parth elements"
+  [request]
+  (let [name (get-in request [:route-params :name])]
+    {:status 200
+     :body (str "Yo! " name "!")
+     :headers {}}))
+
 (defroutes app
   (GET "/" [] greet)
   (GET "/goodbye" [] goodbye)
   (GET "/about" [] about)
   (GET "/request-info" [] handle-dump)
+  (GET "/yo/:name" [] yo)
   (not-found "Sorry, page not found"))
 
 (defn -main
