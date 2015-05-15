@@ -2,7 +2,8 @@
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.reload :refer [wrap-reload]]
             [compojure.core :refer [defroutes GET]]
-            [compojure.route :refer [not-found]]))
+            [compojure.route :refer [not-found]]
+            [ring.handler.dump :refer [handle-dump]]))
 
 (defn greet
   "Say hello to the world of Clojure"
@@ -25,18 +26,11 @@
    :body "I am an awesome Clojure developer, well getting there..."
    :headers {}})
 
-(defn request-info
-  "View the information contained in the request, useful for debugging"
-  [request]
-  {:status 200
-   :body (pr-str request)
-   :headers {}})
-
 (defroutes app
   (GET "/" [] greet)
   (GET "/goodbye" [] goodbye)
   (GET "/about" [] about)
-  (GET "/request-info" [] request-info)
+  (GET "/request-info" [] handle-dump)
   (not-found "Sorry, page not found"))
 
 (defn -main
