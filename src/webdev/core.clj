@@ -18,9 +18,16 @@
    :body "Goodbye tediousnessness"
    :headers {}})
 
+(defn about
+  "Information about the website developer"
+  [request]
+  {:status 200
+   :body "I am an awesome Clojure developer, well getting there..."
+   :headers {}})
 (defroutes app
   (GET "/" [] greet)
   (GET "/goodbye" [] goodbye)
+  (GET "/about" [] about)
   (not-found "Sorry, page not found"))
 
 (defn -main
