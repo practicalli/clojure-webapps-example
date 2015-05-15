@@ -24,10 +24,19 @@
   {:status 200
    :body "I am an awesome Clojure developer, well getting there..."
    :headers {}})
+
+(defn request-info
+  "View the information contained in the request, useful for debugging"
+  [request]
+  {:status 200
+   :body (pr-str request)
+   :headers {}})
+
 (defroutes app
   (GET "/" [] greet)
   (GET "/goodbye" [] goodbye)
   (GET "/about" [] about)
+  (GET "/request-info" [] request-info)
   (not-found "Sorry, page not found"))
 
 (defn -main
