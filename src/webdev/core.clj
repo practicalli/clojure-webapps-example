@@ -7,7 +7,7 @@
   [request]
   (if (= "/" (:uri request))
     {:status 200
-     :body "Hello, Clojure World"
+     :body "Hello, Clojure World.  I now update automatically"
      :headers {}}
     {:status 404
      :body "Sorry, page not found"
