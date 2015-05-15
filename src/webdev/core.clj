@@ -11,8 +11,16 @@
    :body "Hello, Clojure World"
    :headers {}})
 
+(defn goodbye
+  "Say goodbye to tediousnessness"
+  [request]
+  {:status 200
+   :body "Goodbye tediousnessness"
+   :headers {}})
+
 (defroutes app
   (GET "/" [] greet)
+  (GET "/goodbye" [] goodbye)
   (not-found "Sorry, page not found"))
 
 (defn -main
