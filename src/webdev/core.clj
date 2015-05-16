@@ -1,9 +1,12 @@
 (ns webdev.core
+  (:require [webdev.item.model :as items])
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.reload :refer [wrap-reload]]
             [compojure.core :refer [defroutes GET]]
             [compojure.route :refer [not-found]]
             [ring.handler.dump :refer [handle-dump]]))
+
+(def db (System/getenv "DATABASE_URL"))
 
 (defn greet
   "Say hello to the world of Clojure"
@@ -63,11 +66,13 @@
 (defn -main
   "A very simple web server using Ring & Jetty"
   [port-number]
+  (items/create-table db)
   (jetty/run-jetty app
      {:port (Integer. port-number)}))
 
 (defn -dev-main
   "A very simple web server using Ring & Jetty that reloads code changes via the development profile of Leiningen"
   [port-number]
+  (items/create-table db)
   (jetty/run-jetty (wrap-reload #'app)
      {:port (Integer. port-number)}))
